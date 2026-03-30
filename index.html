@@ -1,13 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tienda de Camisas - StyleShirt</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>Hola Mundo</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem vero iure eum saepe soluta voluptas animi ut, consectetur quam dolores reiciendis, vel blanditiis modi, necessitatibus quo temporibus dolorem cum quia.</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">StyleShirt</div>
+            <nav class="nav">
+                <a href="#home" class="nav-link">Inicio</a>
+                <a href="#productos" class="nav-link">Productos</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="#carrito" class="nav-link carrito-icon">🛒 Carrito</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Colección Exclusiva de Camisas</h1>
+            <p>Diseño, calidad y comodidad en cada prenda</p>
+            <button class="btn btn-primary">Explorar Colección</button>
+        </div>
+    </section>
+
+    <!-- Sección de Productos -->
+    <section class="products" id="productos">
+        <div class="container">
+            <h2 class="section-title">Nuestros Productos</h2>
+            <div class="admin-btn-container">
+                <button class="btn btn-admin" id="adminBtn">⚙️ Panel Admin</button>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+                <!-- Producto 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/250x300?text=Camisa+Estampada" alt="Camisa Estampada">
+                    </div>
+                    <div class="product-info">
+                        <h3>Camisa Estampada</h3>
+                        <p class="description">Diseño único con estampados artísticos modernos</p>
+                        <div class="product-footer">
+                            <span class="price">$55.99</span>
+                            <button class="btn btn-small">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/250x300?text=Camisa+Lino" alt="Camisa de Lino">
+                    </div>
+                    <div class="product-info">
+                        <h3>Camisa de Lino Casual</h3>
+                        <p class="description">Perfecta para días cálidos, fresca y cómoda</p>
+                        <div class="product-footer">
+                            <span class="price">$51.99</span>
+                            <button class="btn btn-small">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <p>¿Preguntas? Estamos aquí para ayudarte</p>
+            <form class="contact-form" id="contactForm">
+                <input type="text" id="contactName" placeholder="Tu nombre" required>
+                <input type="email" id="contactEmail" placeholder="Tu email" required>
+                <textarea id="contactMessage" placeholder="Tu mensaje" rows="5" required></textarea>
+                <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+            </form>
+            <div id="contactMessage" style="display:none; margin-top: 1rem; padding: 1rem; border-radius: 5px;"></div>
+        </div>
+    </section>
+
+    <!-- Modal Admin -->
+    <div id="adminModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Panel de Administración - Productos</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Formulario para agregar/editar productos -->
+                <div class="admin-form-section">
+                    <h3 id="formTitle">Agregar Nuevo Producto</h3>
+                    <form id="productForm">
+                        <input type="hidden" id="productId">
+                        <div class="form-group">
+                            <label>Nombre del Producto</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea id="productDesc" rows="3" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Precio</label>
+                                <input type="number" id="productPrice" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cantidad</label>
+                                <input type="number" id="productQuantity" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Categoría</label>
+                                <input type="text" id="productCategory">
+                            </div>
+                            <div class="form-group">
+                                <label>Badge (Popular, Nuevo, -20%, etc)</label>
+                                <input type="text" id="productBadge">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>URL de Imagen</label>
+                            <input type="text" id="productImage">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Lista de productos para editar/eliminar -->
+                <div class="admin-list-section">
+                    <h3>Productos Existentes</h3>
+                    <div class="products-list" id="productsList">
+                        <!-- Se carga dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 StyleShirt. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para conectar con el backend -->
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // ============================================
+        // FUNCIONES DE PRODUCTOS
+        // ============================================
+
+        // Cargar productos desde la BD
+        async function loadProducts() {
+            try {
+                const response = await fetch(`${API_URL}/productos`);
+                const products = await response.json();
+                displayProducts(products);
+                displayAdminProducts(products);
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                document.getElementById('productsGrid').innerHTML = '<p style="text-align:center; grid-column: 1/-1;">Error al cargar productos</p>';
+            }
+        }
+
+        // Mostrar productos en la tienda
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.imagen || 'https://via.placeholder.com/250x300?text=Producto'}" alt="${product.nombre}">
+                        ${product.badge ? `<span class="badge ${product.badge.includes('-') ? 'badge-discount' : product.badge === 'Nuevo' ? 'badge-new' : ''}">${product.badge}</span>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.nombre}</h3>
+                        <p class="description">${product.descripcion}</p>
+                        <div class="product-footer">
+                            <span class="price">$${product.precio.toFixed(2)}</span>
+                            <button class="btn btn-small" onclick="addToCart('${product.id}', '${product.nombre}')">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Mostrar productos en panel admin
+        function displayAdminProducts(products) {
+            const list = document.getElementById('productsList');
+            list.innerHTML = products.map(product => `
+                <div class="admin-product-item">
+                    <div class="admin-product-info">
+                        <h4>${product.nombre}</h4>
+                        <p>Precio: $${product.precio.toFixed(2)} | Stock: ${product.cantidad}</p>
+                    </div>
+                    <div class="admin-product-actions">
+                        <button class="btn btn-small" onclick="editProduct('${product.id}')">Editar</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteProduct('${product.id}')">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Agregar/Actualizar producto
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const productId = document.getElementById('productId').value;
+            const productData = {
+                nombre: document.getElementById('productName').value,
+                descripcion: document.getElementById('productDesc').value,
+                precio: parseFloat(document.getElementById('productPrice').value),
+                cantidad: parseInt(document.getElementById('productQuantity').value),
+                categoria: document.getElementById('productCategory').value,
+                badge: document.getElementById('productBadge').value,
+                imagen: document.getElementById('productImage').value
+            };
+
+            try {
+                let url = `${API_URL}/productos`;
+                let method = 'POST';
+
+                if (productId) {
+                    url = `${API_URL}/productos/${productId}`;
+                    method = 'PUT';
+                }
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+
+                if (response.ok) {
+                    alert(productId ? 'Producto actualizado' : 'Producto creado');
+                    resetProductForm();
+                    loadProducts();
+                } else {
+                    alert('Error al guardar el producto');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar el producto');
+            }
+        });
+
+        // Editar producto
+        async function editProduct(id) {
+            try {
+                const response = await fetch(`${API_URL}/productos/${id}`);
+                const product = await response.json();
+
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.nombre;
+                document.getElementById('productDesc').value = product.descripcion;
+                document.getElementById('productPrice').value = product.precio;
+                document.getElementById('productQuantity').value = product.cantidad;
+                document.getElementById('productCategory').value = product.categoria || '';
+                document.getElementById('productBadge').value = product.badge || '';
+                document.getElementById('productImage').value = product.imagen || '';
+
+                document.getElementById('formTitle').textContent = 'Editar Producto';
+                document.querySelector('#productForm button[type="submit"]').textContent = 'Actualizar Producto';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar el producto');
+            }
+        }
+
+        // Eliminar producto
+        async function deleteProduct(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                try {
+                    const response = await fetch(`${API_URL}/productos/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('Producto eliminado');
+                        loadProducts();
+                    } else {
+                        alert('Error al eliminar el producto');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error al eliminar el producto');
+                }
+            }
+        }
+
+        // Resetear formulario de productos
+        function resetProductForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('formTitle').textContent = 'Agregar Nuevo Producto';
+            document.querySelector('#productForm button[type="submit"]').textContent = 'Guardar Producto';
+        }
+
+        // ============================================
+        // FUNCIONES DE CONTACTO
+        // ============================================
+
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const contactData = {
+                nombre: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                mensaje: document.getElementById('contactMessage').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/contacto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const msgDiv = document.getElementById('contactMessage');
+                    msgDiv.textContent = '✅ ' + result.message;
+                    msgDiv.style.display = 'block';
+                    msgDiv.style.backgroundColor = '#d4edda';
+                    msgDiv.style.color = '#155724';
+                    document.getElementById('contactForm').reset();
+                    setTimeout(() => { msgDiv.style.display = 'none'; }, 5000);
+                } else {
+                    alert('Error al enviar el mensaje');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al enviar el mensaje');
+            }
+        });
+
+        // ============================================
+        // FUNCIONES DEL MODAL ADMIN
+        // ============================================
+
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        adminBtn?.addEventListener('click', () => {
+            adminModal.style.display = 'block';
+            loadProducts();
+        });
+
+        closeModal?.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            resetProductForm();
+        });
+
+        cancelBtn?.addEventListener('click', () => {
+            resetProductForm();
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+                resetProductForm();
+            }
+        });
+
+        // ============================================
+        // CARRITO (PLACEHOLDER)
+        // ============================================
+
+        function addToCart(productId, productName) {
+            alert(`✅ "${productName}" agregado al carrito`);
+        }
+
+        // ============================================
+        // INICIALIZAR
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+        });
+    </script>
 </body>
 </html>
