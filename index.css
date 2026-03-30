@@ -10,3 +10,9 @@ h1 {
     margin-bottom: 1rem;
     color: red;
 }
+
+p {
+    font-size: 40px;
+    line-height: 1.5;
+    color: pink;
+}
